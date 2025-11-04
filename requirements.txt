@@ -1,11 +1,13 @@
 # Core dependencies for Landslide Detection Project
-streamlit>=1.28.0
-torch>=2.0.0
-torchvision>=0.15.0
-numpy>=1.24.0
-matplotlib>=3.7.0
-h5py>=3.8.0
-PyYAML>=6.0
+streamlit==1.28.0
+torch==1.9.0+cu111
+torchvision==0.10.0+cu111
+numpy==1.21.0
+matplotlib==3.7.0
+h5py==3.8.0
+PyYAML==6.0
+requests==2.31.0
+tqdm==4.66.1
 
 # Deep Learning and Computer Vision
 segmentation-models-pytorch>=0.3.0
@@ -22,9 +24,6 @@ wandb>=0.15.0
 Pillow>=9.5.0
 scikit-image>=0.20.0
 opencv-python>=4.8.0
-
-# Kaggle API for model downloads
-kaggle>=1.5.12
 
 # Optional: For better performance
 # torch-scatter>=2.1.0  # Uncomment if needed for specific models
