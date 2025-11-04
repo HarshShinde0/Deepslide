@@ -103,33 +103,49 @@ if model_option == "Select a single model":
 
 # Main content
 st.header("Upload Data")
-uploaded_files = st.file_uploader("Choose .h5 files...", type="h5", accept_multiple_files=True)
+
+# Initialize session state for error tracking if not exists
+if 'upload_errors' not in st.session_state:
+    st.session_state.upload_errors = []
+
+uploaded_files = st.file_uploader(
+    "Choose .h5 files...", 
+    type="h5", 
+    accept_multiple_files=True,
+    help="Upload your .h5 files here. Maximum file size is 200MB."
+)
+
 if uploaded_files:
-    for uploaded_file in uploaded_files:
-        st.write(f"Processing file: {uploaded_file.name}")
-        with st.spinner('Classifying...'):
-            # Create a temporary file path
-            import tempfile
-            import os
+        for uploaded_file in uploaded_files:
+            st.write(f"Processing file: {uploaded_file.name}")
             
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.h5', dir='/app/uploads') as tmp_file:
-                # Write the uploaded file to disk
-                tmp_file.write(uploaded_file.getvalue())
-                tmp_path = tmp_file.name
+            # Display file details for debugging
+            st.write(f"File size: {uploaded_file.size} bytes")
             
-            try:
-                with h5py.File(tmp_path, 'r') as hdf:
-                    data = np.array(hdf.get('img'))
-                    data[np.isnan(data)] = 0.000001
-                    channels = config["dataset_config"]["channels"]
-                    image = np.zeros((128, 128, len(channels)))
-                
-                # Clean up the temporary file
-                os.unlink(tmp_path)
-            except Exception as e:
-                st.error(f"Error processing file: {str(e)}")
-                if os.path.exists(tmp_path):
-                    os.unlink(tmp_path)
+            with st.spinner('Classifying...'):
+                try:
+                    # Read the file directly using BytesIO
+                    import io
+                    bytes_data = uploaded_file.getvalue()
+                    bytes_io = io.BytesIO(bytes_data)
+                    
+                    with h5py.File(bytes_io, 'r') as hdf:
+                        # Check if 'img' exists in the file
+                        if 'img' not in hdf:
+                            st.error(f"Error: 'img' dataset not found in {uploaded_file.name}")
+                            continue
+                            
+                        data = np.array(hdf.get('img'))
+                        data[np.isnan(data)] = 0.000001
+                        channels = config["dataset_config"]["channels"]
+                        image = np.zeros((128, 128, len(channels)))
+                        
+                except h5py.Error as he:
+                    st.error(f"H5PY Error processing {uploaded_file.name}: {str(he)}")
+                    continue
+                except Exception as e:
+                    st.error(f"Error processing {uploaded_file.name}: {str(e)}")
+                    continue
                 for i, channel in enumerate(channels):
                     image[:, :, i] = data[:, :, channel-1]
 
