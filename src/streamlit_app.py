@@ -108,11 +108,28 @@ if uploaded_files:
     for uploaded_file in uploaded_files:
         st.write(f"Processing file: {uploaded_file.name}")
         with st.spinner('Classifying...'):
-            with h5py.File(uploaded_file, 'r') as hdf:
-                data = np.array(hdf.get('img'))
-                data[np.isnan(data)] = 0.000001
-                channels = config["dataset_config"]["channels"]
-                image = np.zeros((128, 128, len(channels)))
+            # Create a temporary file path
+            import tempfile
+            import os
+            
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.h5', dir='/app/uploads') as tmp_file:
+                # Write the uploaded file to disk
+                tmp_file.write(uploaded_file.getvalue())
+                tmp_path = tmp_file.name
+            
+            try:
+                with h5py.File(tmp_path, 'r') as hdf:
+                    data = np.array(hdf.get('img'))
+                    data[np.isnan(data)] = 0.000001
+                    channels = config["dataset_config"]["channels"]
+                    image = np.zeros((128, 128, len(channels)))
+                
+                # Clean up the temporary file
+                os.unlink(tmp_path)
+            except Exception as e:
+                st.error(f"Error processing file: {str(e)}")
+                if os.path.exists(tmp_path):
+                    os.unlink(tmp_path)
                 for i, channel in enumerate(channels):
                     image[:, :, i] = data[:, :, channel-1]
 
