@@ -11,22 +11,22 @@ class ModelDownloader:
         self.models_dir = Path("/app/models")
         self.models_dir.mkdir(exist_ok=True)
         
-        # Kaggle model repository details
-        self.kaggle_model_url = "https://www.kaggle.com/models/harshshinde8/sims/frameworks/PyTorch/serve"
+        # HuggingFace model repository details
+        self.hf_model_url = "https://huggingface.co/harshinde/Sims/resolve/main/models/"
         
-        # Model mapping with Kaggle model IDs
+        # Model mapping with file names
         self.model_files = {
             "deeplabv3plus": {
                 "file": "deeplabv3.pth",
-                "id": "deeplabv3"
+                "url": f"{self.hf_model_url}deeplabv3.pth"
             },
             "densenet121": {
                 "file": "densenet121.pth",
-                "id": "densenet121"
+                "url": f"{self.hf_model_url}densenet121.pth"
             },
             "efficientnetb0": {
-                "file": "effucientnetb0.pth",
-                "id": "effucientnetb0"
+                "file": "efficientnetb0.pth",
+                "url": f"{self.hf_model_url}efficientnetb0.pth"
             },
             "inceptionresnetv2": {
                 "file": "inceptionresnetv2.pth",
@@ -70,9 +70,9 @@ class ModelDownloader:
             }
         }
 
-    def download_from_kaggle(self, model_name):
+    def download_model(self, model_name):
         """
-        Download model from Kaggle Models repository
+        Download model from Hugging Face Models repository
         Args:
             model_name (str): Name of the model to download
         Returns:
@@ -83,6 +83,25 @@ class ModelDownloader:
 
         model_info = self.model_files[model_name]
         model_path = self.models_dir / model_info['file']
+
+        if not model_path.exists():
+            print(f"Downloading {model_name} model...")
+            response = requests.get(model_info['url'], stream=True)
+            response.raise_for_status()
+            
+            total_size = int(response.headers.get('content-length', 0))
+            with open(model_path, 'wb') as f, tqdm(
+                total=total_size,
+                unit='iB',
+                unit_scale=True,
+                unit_divisor=1024,
+            ) as pbar:
+                for data in response.iter_content(chunk_size=1024):
+                    size = f.write(data)
+                    pbar.update(size)
+            print(f"Model downloaded successfully to {model_path}")
+        
+        return str(model_path)
         
         # If model already exists, return path
         if model_path.exists():
