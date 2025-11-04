@@ -12,10 +12,13 @@ COPY requirements.txt ./
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-RUN mkdir -p ./models/
+RUN mkdir -p ./models/ && \
+    mkdir -p /app/uploads && \
+    chmod 777 /app/uploads
 
 # Add src directory to Python path
 ENV PYTHONPATH="${PYTHONPATH}:/app/src"
+ENV STREAMLIT_SERVER_MAX_UPLOAD_SIZE=1024
 
 EXPOSE 8501
 
