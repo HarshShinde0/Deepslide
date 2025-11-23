@@ -1,0 +1,4 @@
+__pycache__/
+results/
+prompts/
+.DS_Store

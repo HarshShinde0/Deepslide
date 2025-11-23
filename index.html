@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions">
+  <meta name="keywords" content="Landslide Detection, Deep Learning, Satellite Imagery, Segmentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions
+  </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <div class="navbar-item has-dropdown is-hoverable">
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Landslide Detection and Mapping Using Deep Learning Across
+              Multi-Source Satellite Data and Geographic Regions</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://harshshinde0.github.io/">Harsh Shinde</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Rahul Burange</a>,</span>
+              <span class="author-block">
+                <a href="#">Omkar Mutyalwar</a></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">KDKCE</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Paper Link. -->
+                <span class="link-block">
+                  <a href="https://dx.doi.org/10.2139/ssrn.5225437"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/HarshShinde0/Deepslide"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Models Link. -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/harshinde/DeepSlide_Models"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-cubes"></i>
+                    </span>
+                    <span>Models</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/harshinde/LandSlide4Sense"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-database"></i>
+                    </span>
+                    <span>Dataset</span>
+                  </a>
+                </span>
+                <!-- Demo Link. -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/spaces/harshinde/DeepSlide"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-rocket"></i>
+                    </span>
+                    <span>Demo</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser Image -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="static/images/land_train.png" height="100%">
+        <h2 class="subtitle has-text-centered">
+          Locations of the training sites on a global image retrieved from for landslide susceptibility
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Landslides pose severe threats to infrastructure, economies, and human lives, necessitating accurate
+              detection and
+              predictive mapping across diverse geographic regions. With advancements in deep learning and remote
+              sensing, automated
+              landslide detection has become increasingly effective. This study presents a comprehensive approach
+              integrating multi-source
+              satellite imagery and deep learning models to enhance landslide identification and prediction. We leverage
+              Sentinel-2
+              multispectral data and ALOS PALSAR-derived slope and Digital Elevation Model (DEM) layers to capture
+              critical environmental
+              features influencing landslide occurrences. Various geospatial analysis techniques are employed to assess
+              the impact of terrain
+              characteristics, vegetation cover, and rainfall on detection accuracy. Additionally, we evaluate the
+              performance of multiple state-of-the-art deep learning segmentation models, including U-Net, DeepLabV3+,
+              and ResNet, to determine their effectiveness in
+              landslide detection. The proposed framework contributes to the development of reliable early warning
+              systems, improved disaster
+              risk management, and sustainable land-use planning. Our findings provide valuable insights into the
+              potential of deep learning
+              and multi-source remote sensing in creating robust, scalable, and transferable landslide prediction
+              models.
+            </p>
+          </div>
+          
+          <div class="content has-text-centered" style="margin-top: 2rem;">
+            <p><strong>Index Terms</strong> - <em>Image Processing, Machine Learning, Deep Learning, Computer Vision, Remote Sensing.</em></p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="section" id="Our method">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Our Method</h2>
+
+      <h3>A. Study Areas</h3>
+      <div class="content has-text-justified">
+        <p>
+          The selected study areas represent diverse geographic and climatic conditions. Their locations are depicted on
+          a global landslide susceptibility map generated using multiple explanatory variables such as slope degree,
+          forest loss, geology, road networks, and fault lines.
+        </p>
+
+        <h4>1. Iburi-Tobu Area of Hokkaido, Japan:</h4>
+        <ul>
+          <li>Hit by a magnitude 6.6 earthquake on September 6, 2018, triggering over 5600 landslides.</li>
+          <li>Landslides were exacerbated by preceding heavy rainfall from Typhoon Jebi.</li>
+          <li>Landslide inventories were created using very high-resolution aerial images.</li>
+        </ul>
+
+        <h4>2. Kodagu District of Karnataka, India:</h4>
+        <ul>
+          <li>Experienced extreme rainfall in August 2018, triggering severe landslides and flash floods.</li>
+          <li>Landslides were linked to deforestation, unplanned urbanization, and mining activities.</li>
+          <li>Previous studies have applied unsupervised learning techniques for landslide detection.</li>
+        </ul>
+
+        <h4>3. Rasuwa District of Bagmati, Nepal:</h4>
+        <ul>
+          <li>One of the most landslide-prone regions in the Himalayas.</li>
+          <li>Major landslides occurred due to the 2015 Gorkha and Dolakha earthquakes.</li>
+          <li>Landslide inventory compiled from GPS field surveys and visual interpretation of high-resolution images.
+          </li>
+        </ul>
+
+        <h4>4. Western Taitung County, Taiwan:</h4>
+        <ul>
+          <li>Landslides frequently triggered by typhoons and earthquakes.</li>
+          <li>Typhoon Morakot (2009) caused extensive landslides, destroying villages and infrastructure.</li>
+          <li>Landslide inventory derived from previous studies and Google Earth images.</li>
+        </ul>
+      </div>
+
+      <h3>B. Sensor Characteristics</h3>
+      <div class="content has-text-justified">
+        <h4>1. Sentinel-2:</h4>
+        <ul>
+          <li>Provides multi-spectral imagery with 13 bands at spatial resolutions of 10, 20, and 60 meters.</li>
+          <li>High revisit frequency (2–3 days at mid-latitudes) enables continuous monitoring.</li>
+          <li>Sentinel-2 data were obtained from Google Earth Engine (GEE), ensuring cloud-free imagery for analysis.
+          </li>
+        </ul>
+
+        <h4>2. ALOS PALSAR:</h4>
+        <ul>
+          <li>Provides synthetic aperture radar (SAR) data with a 12.5m spatial resolution.</li>
+          <li>The DEM and slope layers derived from ALOS PALSAR were used to supplement optical imagery.</li>
+        </ul>
+      </div>
+
+      <h3>C. Landslide Inventory Annotation</h3>
+      <div class="content has-text-justified">
+        <p>To ensure high-quality landslide annotations, we employed a two-step workflow:</p>
+
+        <h4>1. Object-Based Image Analysis (OBIA):</h4>
+        <ul>
+          <li>Computed image difference indices from pre- and post-landslide images.</li>
+          <li>Performed multi-resolution segmentation and rule-based classification.</li>
+        </ul>
+
+        <h4>2. Manual Verification:</h4>
+        <ul>
+          <li>Used high-resolution Google Earth imagery and existing landslide inventories.</li>
+          <li>Ensured accurate delineation of landslide boundaries.</li>
+        </ul>
+      </div>
+
+      <h3>D. Benchmark Dataset Statistics and Structure</h3>
+      <div class="content has-text-justified">
+        <p>
+          The Landslide4Sense benchmark dataset includes 128×128 window-size patches, each containing 14 distinct data
+          layers. The first 12 bands consist of multi-spectral data from Sentinel-2, while bands 13 and 14 represent the
+          Digital Elevation Model (DEM) and slope data derived from ALOS PALSAR. Each patch is accurately labeled, with
+          ground truth polygons outlined in red to indicate landslide areas.
+        </p>
+
+        <div class="columns is-centered">
+          <div class="column is-three-quarters">
+            <figure class="image">
+              <img src="./static/images/bands.png" alt="Landslide Dataset Bands Visualization">
+            </figure>
+            <p class="has-text-centered is-italic">
+              Visualizing each unique layer inside the generated landslide dataset's 128x128 window-size patches. The first 12 bands
+              feature multi-spectral data from Sentinel-2, while bands 13 and 14 contain DEM data and slope from ALOS PALSAR. The patches
+              in the last column are accurately labeled, and they are complimented by red polygons signifying the landslide category. These
+              patches in last column refers to the ground truth Polygons.
+            </p>
+          </div>
+        </div>
+
+        <p><strong>The 14 layers in the Landslide4Sense dataset:</strong></p>
+        <ul>
+          <li>Sentinel-2 band 1: Blue spectral band data</li>
+          <li>Sentinel-2 band 2: Green spectral band data</li>
+          <li>Sentinel-2 band 3: Red spectral band data</li>
+          <li>Sentinel-2 band 4: Near Infrared (NIR) spectral band data</li>
+          <li>Sentinel-2 band 5-7: Shortwave Infrared (SWIR) spectral band data</li>
+          <li>Sentinel-2 band 8: NIR spectral band data</li>
+          <li>Sentinel-2 band 9: Water Vapour (WV) spectral band data</li>
+          <li>Sentinel-2 band 10: Cirrus (CI) spectral band data</li>
+          <li>Sentinel-2 band 11-12: SWIR spectral band data</li>
+          <li>Digital Elevation Model (DEM): Elevation information data</li>
+          <li>Slope: Slope information data</li>
+        </ul>
+
+        <p><strong>Dataset Statistics:</strong></p>
+        <ul>
+          <li>3799 annotated image patches (128 × 128 pixels each, with a resolution of 10 meters per pixel)</li>
+          <li>14 bands per image patch</li>
+          <li>Dataset split: 959 patches for training, 2840 patches for testing</li>
+        </ul>
+
+        <p>
+          Each patch contains pixel-wise labels indicating landslide and non-landslide areas. The dataset exhibits
+          significant variability in landslide shape, size, distribution, and frequency across study areas. Sentinel-2
+          bands 4 and 5 show the highest spectral differences between landslide and non-landslide areas.
+        </p>
+      </div>
+
+      <h3>Performance</h3>
+      <div class="content has-text-justified">
+        <p>
+          Our results demonstrate that ResNet34, VGG-16, and EfficientNet-B0 achieved the highest F1 Scores, indicating superior performance in distinguishing landslide-prone areas from non-landslide regions. The ResNet34-based U-Net model attained the best balance between precision and recall, achieving an F1 Score of 0.7470, making it the most reliable among the tested architectures. Notably, VGG-16 and EfficientNet-B0 also performed well, with F1 Scores of 0.7357 and 0.7341, respectively.
+        </p>
+
+        <p>
+          The classic U-Net architecture, while still effective, demonstrated a lower F1 Score of 0.7012, highlighting the advantage of deeper and more advanced feature extraction architectures like ResNet and EfficientNet-B0. SeResNet-50 and SeResNeXt50_32x4d also showcased competitive performance, emphasizing the benefit of integrating Squeeze-and-Excitation modules for better feature representation.
+        </p>
+
+        <p>
+          The results indicate that hybrid models leveraging deeper feature extraction mechanisms significantly enhance landslide detection performance compared to standard U-Net. The ability to capture both local and global contextual information plays a crucial role in improving segmentation quality. This study further reinforces the need for models that efficiently integrate multi-scale feature representations for landslide susceptibility mapping in complex terrains.
+        </p>
+
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Models</th>
+                <th>F1 Score</th>
+                <th>Precision</th>
+                <th>Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ResNet34</strong></td>
+                <td><strong>0.7470</strong></td>
+                <td>0.7737</td>
+                <td>0.7267</td>
+              </tr>
+              <tr>
+                <td>VGG16</td>
+                <td>0.7357</td>
+                <td>0.7650</td>
+                <td>0.7121</td>
+              </tr>
+              <tr>
+                <td>EfficientNet-B0</td>
+                <td>0.7341</td>
+                <td>0.7536</td>
+                <td>0.7221</td>
+              </tr>
+              <tr>
+                <td>ResNeXt50_32X4D</td>
+                <td>0.7330</td>
+                <td>0.7453</td>
+                <td>0.7247</td>
+              </tr>
+              <tr>
+                <td>SeResNet-50</td>
+                <td>0.7328</td>
+                <td>0.7826</td>
+                <td>0.6950</td>
+              </tr>
+              <tr>
+                <td>DenseNet121</td>
+                <td>0.7290</td>
+                <td>0.7241</td>
+                <td>0.7400</td>
+              </tr>
+              <tr>
+                <td>SeResNeXt50_32x4D</td>
+                <td>0.7279</td>
+                <td>0.7249</td>
+                <td>0.7350</td>
+              </tr>
+              <tr>
+                <td>InceptionV4</td>
+                <td>0.7246</td>
+                <td>0.7631</td>
+                <td>0.6945</td>
+              </tr>
+              <tr>
+                <td>InceptionResNetV2</td>
+                <td>0.7151</td>
+                <td>0.7774</td>
+                <td>0.6692</td>
+              </tr>
+              <tr>
+                <td>DeepLabV3+</td>
+                <td>0.7141</td>
+                <td>0.7471</td>
+                <td>0.6897</td>
+              </tr>
+              <tr>
+                <td>MobileNetV2</td>
+                <td>0.7119</td>
+                <td>0.7000</td>
+                <td>0.7337</td>
+              </tr>
+              <tr>
+                <td>U-Net</td>
+                <td>0.7012</td>
+                <td>0.7906</td>
+                <td>0.6338</td>
+              </tr>
+              <tr>
+                <td>MiT-B1</td>
+                <td>0.6989</td>
+                <td>0.7574</td>
+                <td>0.6596</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <p class="has-text-centered is-italic">
+          <strong>Table:</strong> Comparison of performance evaluation metrics of segmentation models tested on the Landslide4Sense dataset.
+        </p>
+
+        <div class="columns is-multiline is-centered">
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./static/images/f1.png" alt="Performance Metrics for Landslide Prediction in U-Net">
+            </figure>
+            <p class="has-text-centered is-italic">Performance Metrics for Landslide Prediction in U-Net</p>
+          </div>
+        </div>
+
+        <div class="columns is-multiline is-centered">
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./static/images/loss.png" alt="Loss Metrics">
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./static/images/prescision.png" alt="Precision Metrics">
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./static/images/recall.png" alt="Recall Metrics">
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./static/images/valf1.png" alt="Validation F1 Metrics">
+            </figure>
+          </div>
+        </div>
+
+        <p class="has-text-centered is-italic">
+          Performance Metrics for Landslide Prediction in ResNet34, VGG-16, EfficientNet-B0, ResNeXt50_32X4D, SeResNet-50,
+          DenseNet121, SeResNeXt50_32x4D, InceptionV4, InceptionResNetV2, DeepLabV3+, MobileNetV2, MiT-b1_14C.
+        </p>
+
+        <h4>Comparative Model Performance:</h4>
+        <p>
+          The comparative evaluation underscores the strength of ResNet34 and VGG-16 as encoders in the U-Net framework. These
+          models not only offer high predictive accuracy but also minimize false detections. The increase in recall values across these
+          models suggests a significant improvement in detecting subtle landslide regions, which is critical for real-world applications
+          where missing a landslide event could lead to disastrous consequences. By leveraging advanced deep learning techniques, our
+          study demonstrates that multi-source satellite imagery, when processed with optimized architectures, can significantly enhance
+          landslide detection accuracy. These findings contribute to the growing field of deep learning applications in geospatial analysis,
+          paving the way for more reliable and scalable landslide prediction systems.
+        </p>
+
+        <h4>RESULT</h4>
+        <p>
+          We evaluated various deep learning models for landslide detection using the Landslide4Sense dataset with Sentinel-2 imagery and ALOS PALSAR elevation data. The ResNet34-based U-Net achieved the highest F1 Score of 0.7470 with balanced precision (0.7737) and recall (0.7267). VGG16 and EfficientNet-B0 also performed well with F1 Scores of 0.7357 and 0.7341 respectively. Advanced architectures significantly outperformed the classic U-Net (F1: 0.7012), demonstrating the importance of deeper feature extraction mechanisms for complex geospatial data.
+        </p>
+
+        <h4>CONCLUSION</h4>
+        <p>
+          This study demonstrates that hybrid deep learning models with advanced feature extraction significantly outperform traditional U-Net for landslide detection. ResNet34-based U-Net emerged as the most reliable architecture with an F1 Score of 0.7470. Multi-source data integration combining optical imagery with elevation information proves crucial for accurate landslide identification. These findings contribute to developing more reliable disaster risk management and early warning systems for landslide-prone regions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{burange2025landslide,
+  title={Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions},
+  author={Burange, Rahul and Shinde, Harsh and Mutyalwar, Omkar},
+  journal={Available at SSRN 5225437},
+  year={2025},
+  doi={10.2139/ssrn.5225437}
+}
+
+@article{burange2025landslide,
+  title={Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions},
+  author={Burange, Rahul A and Shinde, Harsh K and Mutyalwar, Omkar},
+  journal={arXiv preprint arXiv:2507.01123},
+  year={2025}
+}
+
+@article{burange2025comprehensive,
+  title={A Comprehensive Approach to Landslide Detection: Deep Learning and Remote Sensing Integration},
+  author={Burange, Rahul and Shinde, Harsh and Mutyalwar, Omkar},
+  year={2025},
+  publisher={IJARCCE}
+}
+
+@article{burange2025exhaustive,
+  title={An Exhaustive Review on Deep Learning for Advanced Landslide Detection and Prediction from Multi-Source Satellite Imagery},
+  author={Burange, Rahul and Shinde, Harsh and Mutyalwar, Omkar},
+  journal={Available at SSRN 5155990},
+  year={2025},
+  doi={10.2139/ssrn.5155990},
+  url={https://ssrn.com/abstract=5155990}
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
