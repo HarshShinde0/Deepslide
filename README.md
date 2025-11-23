@@ -49,6 +49,7 @@ All models are trained on satellite imagery data and are optimized for landslide
 - PyTorch 1.9.0
 - Streamlit 1.28.0
 - Models are automatically downloaded from HuggingFace [harshinde/DeepSlide_Models](https://huggingface.co/harshinde/DeepSlide_Models).
+- Dataset [harshinde/LandSlide4Sense](https://huggingface.co/datasets/harshinde/LandSlide4Sense).
 
 ## Author
 - Harsh Shinde
