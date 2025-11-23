@@ -1,7 +1,7 @@
 # Models
 models/
 *.pth
-*.h5
+# *.h5 (commented out to allow LFS tracking of h5 files in examples/)
 *.npy
 
 # Python
