@@ -1,5 +1,5 @@
 ---
-title: Landslide Detection Models
+title: DeepSlide - Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions
 emoji: 🌍
 colorFrom: blue
 colorTo: green
