@@ -9,7 +9,7 @@ ds = load_dataset("ibm-nasa-geospatial/Landslide4sense")
 ```
 Deepslide Models - [harshinde/DeepSlide_Models](https://huggingface.co/harshinde/DeepSlide_Models)
 
-Dataset [harshinde/LandSlide4Sense](https://huggingface.co/datasets/harshinde/LandSlide4Sense
+Dataset [harshinde/LandSlide4Sense](https://huggingface.co/datasets/harshinde/LandSlide4Sense)
 
 Wandb Results - https://wandb.ai/Silvamillion/Land4Sense
 
