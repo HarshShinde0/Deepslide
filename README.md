@@ -17,7 +17,8 @@ license: apache-2.0
 
 # Landslide Detection Models Demo
 
-This Space demonstrates various deep learning models for landslide detection, using models trained with PyTorch. The models are served directly from our [Kaggle Models Repository](https://www.kaggle.com/models/harshshinde8/sims/).
+This Space demonstrates various deep learning models for landslide detection, using models trained with PyTorch. The models are served directly from our [Kaggle Models Repository](https://www.kaggle.com/models/harshshinde8/sims/)
+ or [harshinde/DeepSlide_Models](https://huggingface.co/harshinde/DeepSlide_Models).
 
 ## Available Models
 - DeepLabV3+
@@ -47,7 +48,7 @@ All models are trained on satellite imagery data and are optimized for landslide
 - Python 3.9
 - PyTorch 1.9.0
 - Streamlit 1.28.0
-- Models are automatically downloaded from Kaggle when needed
+- Models are automatically downloaded from HuggingFace [harshinde/DeepSlide_Models](https://huggingface.co/harshinde/DeepSlide_Models).
 
 ## Author
 - Harsh Shinde
