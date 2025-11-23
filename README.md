@@ -5,7 +5,7 @@ Landslide4sense Dataset:
 ```Landslide4sense Dataset
 from datasets import load_dataset
 
-ds = load_dataset("ibm-nasa-geospatial/Landslide4sense")
+ds = load_dataset("harshinde/LandSlide4Sense")
 ```
 Deepslide Models - [harshinde/DeepSlide_Models](https://huggingface.co/harshinde/DeepSlide_Models)
 
