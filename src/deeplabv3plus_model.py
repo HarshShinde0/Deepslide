@@ -10,7 +10,7 @@ from torch.optim.lr_scheduler import StepLR
 class smp_model(nn.Module):
     def __init__(self, in_channels, out_channels, model_type, num_classes, encoder_weights):
         super(smp_model, self).__init__()
-        if model_type == "deeplabv3+":
+        if model_type == "deeplabv3plus":
             self.model = smp.DeepLabV3Plus(
                 encoder_name="resnet50",  # Change this to a valid encoder
                 encoder_weights=encoder_weights,

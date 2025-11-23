@@ -8,11 +8,11 @@ from tqdm.auto import tqdm
 class ModelDownloader:
     def __init__(self):
         # Create models directory for caching
-        self.models_dir = Path("/app/models")
+        self.models_dir = Path("models").resolve()
         self.models_dir.mkdir(exist_ok=True)
         
         # HuggingFace model repository details
-        self.hf_model_url = "https://huggingface.co/harshinde/Sims/resolve/main/models/"
+        self.hf_model_url = "https://huggingface.co/harshinde/DeepSlide_Models/resolve/main/"
         
         # Model mapping with file names
         self.model_files = {
@@ -26,47 +26,47 @@ class ModelDownloader:
             },
             "efficientnetb0": {
                 "file": "efficientnetb0.pth",
-                "url": f"{self.hf_model_url}efficientnetb0.pth"
+                "url": f"{self.hf_model_url}effucientnetb0.pth"
             },
             "inceptionresnetv2": {
                 "file": "inceptionresnetv2.pth",
-                "id": "inceptionresnetv2"
+                "url": f"{self.hf_model_url}inceptionresnetv2.pth"
             },
             "inceptionv4": {
                 "file": "inceptionv4.pth",
-                "id": "inceptionv4"
+                "url": f"{self.hf_model_url}inceptionv4.pth"
             },
             "mitb1": {
                 "file": "mitb1.pth",
-                "id": "mitb1"
+                "url": f"{self.hf_model_url}mitb1.pth"
             },
             "mobilenetv2": {
                 "file": "mobilenetv2.pth",
-                "id": "mobilenetv2"
+                "url": f"{self.hf_model_url}mobilenetv2.pth"
             },
             "resnet34": {
                 "file": "resnet34.pth",
-                "id": "resnet34"
+                "url": f"{self.hf_model_url}resnet34.pth"
             },
             "resnext50_32x4d": {
                 "file": "resnext50-32x4d.pth",
-                "id": "resnext50-32x4d"
+                "url": f"{self.hf_model_url}resnext50-32x4d.pth"
             },
             "se_resnet50": {
                 "file": "se_resnet50.pth",
-                "id": "se_resnet50"
+                "url": f"{self.hf_model_url}se_resnet50.pth"
             },
             "se_resnext50_32x4d": {
                 "file": "se_resnext50_32x4d.pth",
-                "id": "se_resnext50_32x4d"
+                "url": f"{self.hf_model_url}se_resnext50_32x4d.pth"
             },
             "segformer": {
                 "file": "segformer.pth",
-                "id": "segformer"
+                "url": f"{self.hf_model_url}segformer.pth"
             },
             "vgg16": {
                 "file": "vgg16.pth",
-                "id": "vgg16"
+                "url": f"{self.hf_model_url}vgg16.pth"
             }
         }
 
@@ -86,7 +86,15 @@ class ModelDownloader:
 
         if not model_path.exists():
             print(f"Downloading {model_name} model...")
-            response = requests.get(model_info['url'], stream=True)
+            # Use 'url' if available, otherwise fallback or error (logic simplified for now as per plan)
+            if 'url' in model_info:
+                url = model_info['url']
+            else:
+                 # Fallback for models without explicit URL in the map (though all seem to have it or use ID)
+                 # Assuming the pattern from init for others
+                 url = f"{self.hf_model_url}{model_info['file']}"
+
+            response = requests.get(url, stream=True)
             response.raise_for_status()
             
             total_size = int(response.headers.get('content-length', 0))
@@ -100,55 +108,6 @@ class ModelDownloader:
                     size = f.write(data)
                     pbar.update(size)
             print(f"Model downloaded successfully to {model_path}")
-        
-        return str(model_path)
-        
-        # If model already exists, return path
-        if model_path.exists():
-            return str(model_path)
-
-        # Construct download URL for the specific model
-        download_url = f"{self.kaggle_model_url}/{model_info['id']}/1"
-        
-        try:
-            st.info(f"Downloading model {model_name} from Kaggle Models...")
-            progress_bar = st.progress(0)
-            
-            # Download with progress
-            response = requests.get(download_url, stream=True)
-            response.raise_for_status()
-            
-            total_size = int(response.headers.get('content-length', 0))
-            block_size = 1024  # 1 Kibibyte
-            
-            with open(model_path, 'wb') as f:
-                for i, data in enumerate(response.iter_content(block_size)):
-                    progress_bar.progress(min(i * block_size / total_size, 1.0))
-                    f.write(data)
-            
-            st.success(f"Successfully downloaded {model_name}")
-            return str(model_path)
-            
-        except requests.exceptions.RequestException as e:
-            raise Exception(f"Failed to download model from Kaggle: {str(e)}")
-
-    def get_model_path(self, model_name):
-        """
-        Get the path for a model file, downloading it from Kaggle if necessary
-        Args:
-            model_name (str): Name of the model (e.g., 'deeplabv3plus', 'densenet121', etc.)
-        Returns:
-            str: Path to the model file
-        """
-        if model_name not in self.model_files:
-            raise ValueError(f"Model {model_name} not found. Available models: {list(self.model_files.keys())}")
-        
-        model_info = self.model_files[model_name]
-        model_path = self.models_dir / model_info['file']
-        
-        # If model doesn't exist locally, download it
-        if not model_path.exists():
-            return self.download_from_kaggle(model_name)
         
         return str(model_path)
 

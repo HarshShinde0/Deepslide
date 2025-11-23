@@ -18,7 +18,7 @@ class smp_model(nn.Module):
         )
 
     def load_pretrained_weights(self):
-        state_dict = torch.load('/home/hks/MOU/DenseNet121_14C_L4S/densenet121-fbdb23505-trainWeights.pth', map_location='cpu')
+        # self.model.load_pretrained_weights()
         conv1_weight = state_dict['features.conv0.weight']
         new_conv1_weight = torch.zeros((conv1_weight.shape[0], 14, *conv1_weight.shape[2:]))
         new_conv1_weight[:, :3, :, :] = conv1_weight  # Copy weights for the first 3 channels
@@ -50,7 +50,7 @@ class LandslideModel(pl.LightningModule):
                                    model_type=model_type, 
                                    num_classes=num_classes, 
                                    encoder_weights=encoder_weights)
-            self.model.load_pretrained_weights()
+            # self.model.load_pretrained_weights()
 
         self.weights = torch.tensor([5], dtype=torch.float32).to(self.device)
         self.wce = nn.BCELoss(weight=self.weights)

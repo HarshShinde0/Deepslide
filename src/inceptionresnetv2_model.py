@@ -11,7 +11,7 @@ class smp_model(nn.Module):
     def __init__(self, in_channels, out_channels, model_type, num_classes, encoder_weights):
         super(smp_model, self).__init__()
         self.model = smp.Unet(
-            encoder_name=model_type,
+            encoder_name="inceptionresnetv2",
             encoder_weights=encoder_weights,
             in_channels=in_channels,
             classes=num_classes,
