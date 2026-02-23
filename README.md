@@ -1,4 +1,5 @@
 #  *DeepSlide: Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions*
+*https://harshshinde0.github.io/Deepslide/*
 
 Landslide4sense Dataset:
 
