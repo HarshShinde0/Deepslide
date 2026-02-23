@@ -7,7 +7,7 @@ matplotlib>=3.7.0
 h5py>=3.8.0
 PyYAML>=6.0
 requests==2.32.5
-tqdm==4.67.1
+tqdm==4.67.3
 
 # Deep Learning and Computer Vision
 segmentation-models-pytorch>=0.3.0
