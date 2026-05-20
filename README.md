@@ -14,24 +14,21 @@ Dataset [harshinde/LandSlide4Sense](https://huggingface.co/datasets/harshinde/La
 
 Wandb Results - https://wandb.ai/Silvamillion/Land4Sense
 
-Paper - https://dx.doi.org/10.2139/ssrn.5225437
+Paper - https://arxiv.org/abs/2507.01123v2
 
 ## 📄 Citation
 
 If you use **DeepSlide-L4S-Code** or reference our work in your research, please cite our paper:
 
-> Harsh Shinde, et al. *Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions*, SSRN, 2024.  
-> DOI: [10.2139/ssrn.5225437](https://dx.doi.org/10.2139/ssrn.5225437)
+> Harsh Shinde, et al. *Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions*, 2024.  
+> DOI: [https://arxiv.org/abs/2507.01123v2](https://arxiv.org/abs/2507.01123v2)
 
 BibTeX:
 ```bibtex
-@article{burange2025landslide,
-  title={Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions},
-  author={Burange, Rahul and Shinde, Harsh and Mutyalwar, Omkar},
-  journal={Available at SSRN 5225437},
-  year={2025}
-  eprint={5225437},
-  archivePrefix={SSRN},
-  doi={10.2139/ssrn.5225437},
-  url={https://dx.doi.org/10.2139/ssrn.5225437}
-}
+@article{Burange_2025,
+   title={Landslide Detection and Mapping Using Deep Learning Across Multi-Source Satellite Data and Geographic Regions},
+   url={https://arxiv.org/abs/2507.01123v2},
+   DOI={arXiv:2507.01123v2},
+   author={Burange, Rahul and Shinde, Harsh and Mutyalwar, Omkar},
+   year={2025} }
+```
